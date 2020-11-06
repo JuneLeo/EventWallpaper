@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:onClick="setWallpaper"
+        android:gravity="center"
+        android:text="设置壁纸"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <TextView
+        android:id="@+id/tv_count"
+        android:gravity="center"
+        android:text="无消息数量"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:gravity="center"
+        android:text="无消息"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <TextView
+        android:gravity="center"
+        android:onClick="lowClick"
+        android:text="发送一个低优先级消息"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+   <TextView
+       android:gravity="center"
+       android:onClick="normalClick"
+       android:text="发送一个普通优先级消息"
+       android:layout_width="match_parent"
+       android:layout_height="50dp"/>
+
+    <TextView
+        android:gravity="center"
+        android:onClick="highClick"
+        android:text="发送一个高优先级消息"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <TextView
+        android:gravity="center"
+        android:onClick="loopClick"
+        android:text="发送一个有效期为10秒的消息"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <TextView
+        android:gravity="center"
+        android:onClick="loopClick20"
+        android:text="发送一个有效期为20秒的消息"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+</LinearLayout>
