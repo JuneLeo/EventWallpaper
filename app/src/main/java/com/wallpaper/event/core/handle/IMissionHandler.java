@@ -12,6 +12,8 @@ public interface IMissionHandler {
 
     void release();
 
+    void moveToNext();
+
     interface MissionHandlerListener {
         void handler(Mission mission);
     }

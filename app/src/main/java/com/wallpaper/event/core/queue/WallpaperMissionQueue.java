@@ -1,6 +1,7 @@
 package com.wallpaper.event.core.queue;
 
 import android.graphics.Color;
+import android.text.format.DateUtils;
 
 import com.wallpaper.event.core.mission.Mission;
 import com.wallpaper.event.core.wallpaper.Wallpaper;
@@ -13,7 +14,7 @@ public class WallpaperMissionQueue extends MissionQueue {
         Wallpaper wallpaper = new Wallpaper("我是默认壁纸","我是默认壁纸");
         wallpaper.color = Color.GRAY;
         defaultWallpaperMission = new DefaultWallpaperMission(new Mission.Builder(wallpaper)
-                .perShowTime(Long.MAX_VALUE)
+                .perShowTime(DateUtils.YEAR_IN_MILLIS)
                 .weight(Integer.MAX_VALUE));
 
     }

@@ -55,4 +55,14 @@ public class MissionHandleProxy implements IMissionHandler{
             }
         });
     }
+
+    @Override
+    public void moveToNext() {
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                iMissionHandler.moveToNext();
+            }
+        });
+    }
 }

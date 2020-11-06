@@ -66,6 +66,14 @@ public class Mission {
         return true;
     }
 
+    /**
+     * 是否可以手动移除
+     * @return
+     */
+    public boolean canHandRemove(){
+        return true;
+    }
+
 
     public static class Builder {
 

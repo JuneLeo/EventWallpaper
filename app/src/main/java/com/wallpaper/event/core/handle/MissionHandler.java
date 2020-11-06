@@ -5,6 +5,7 @@ import android.os.Message;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
 import com.wallpaper.event.core.mission.Mission;
 import com.wallpaper.event.core.queue.IMissionQueue;
 
@@ -22,7 +23,7 @@ public class MissionHandler implements IMissionHandler {
     private static final int MESSAGE_HANDLE = 1;
     private boolean isEnable;
 
-    public MissionHandler(IMissionQueue missionQueue,MissionHandlerListener missionHandlerListener) {
+    public MissionHandler(IMissionQueue missionQueue, MissionHandlerListener missionHandlerListener) {
         this.missionQueue = missionQueue;
         this.missionHandlerListener = missionHandlerListener;
     }
@@ -31,7 +32,7 @@ public class MissionHandler implements IMissionHandler {
     public void handle(Mission mission) {
         if (!isEnable()) {
             missionQueue.push(mission); //消息不处理直接push到队列
-            return ;
+            return;
         }
         if (currentMission == null) { //当前没有消息直接处理
             currentMission = mission;
@@ -71,9 +72,17 @@ public class MissionHandler implements IMissionHandler {
     }
 
     @Override
+    public void moveToNext() {
+        if (currentMission != null && currentMission.canHandRemove()) {
+            missionQueue.remove(currentMission);
+        }
+        handleMission();
+    }
+
+    @Override
     public void start() {
-        if (isExecuting()){
-            Log.d("song","消息扩散正在执行中");
+        if (isExecuting()) {
+            Log.d("song", "消息扩散正在执行中");
             return;
         }
         isEnable = true;
@@ -83,20 +92,20 @@ public class MissionHandler implements IMissionHandler {
     private void handleMission() {
         currentMission = null;
         if (!isEnable()) { //是否开启消息扩散
-            Log.d("song","没有开启扩散消息");
+            Log.d("song", "没有开启扩散消息");
             return;
         }
 
         currentMission = missionQueue.poll();
 
         if (currentMission == null) {
-            Log.d("song","消息为空");
+            Log.d("song", "消息为空");
             return;
         }
         if (isLooper(currentMission)) { // 如果是可以轮训的并且在有效期内
             pushAndDecreaseWeight(currentMission);
         }
-        Log.d("song","开始扩散消息");
+        Log.d("song", "开始扩散消息");
         dispatcherMission(currentMission);
     }
 
@@ -109,6 +118,7 @@ public class MissionHandler implements IMissionHandler {
 
     /**
      * 是否正在执行任务
+     *
      * @return
      */
     private boolean isExecuting() {
@@ -118,9 +128,10 @@ public class MissionHandler implements IMissionHandler {
 
     /**
      * 消息处理是否开启
+     *
      * @return
      */
-    private boolean isEnable(){
+    private boolean isEnable() {
         return isEnable;
     }
 
@@ -135,7 +146,7 @@ public class MissionHandler implements IMissionHandler {
             public void run() {
                 missionHandlerListener.handler(currentMission);
                 handler.removeMessages(MESSAGE_HANDLE);
-                handler.sendEmptyMessageDelayed(MESSAGE_HANDLE,currentMission.getPerShowTime());
+                handler.sendEmptyMessageDelayed(MESSAGE_HANDLE, currentMission.getPerShowTime());
             }
         });
     }

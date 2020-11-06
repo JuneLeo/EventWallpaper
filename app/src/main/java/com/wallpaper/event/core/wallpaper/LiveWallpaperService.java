@@ -5,6 +5,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.service.wallpaper.WallpaperService;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 import com.wallpaper.event.core.MissionManager;
@@ -52,6 +54,16 @@ public class LiveWallpaperService extends WallpaperService {
             }
         };
 
+
+        GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                missionManager.moveToNext();
+                return super.onDoubleTap(e);
+            }
+        });
+
         @Override
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
@@ -68,6 +80,12 @@ public class LiveWallpaperService extends WallpaperService {
             } else {
                 setOffsetNotificationsEnabled(true);
             }
+        }
+
+        @Override
+        public void onTouchEvent(MotionEvent event) {
+            super.onTouchEvent(event);
+            gestureDetector.onTouchEvent(event);
         }
 
         @Override

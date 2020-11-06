@@ -86,6 +86,10 @@ public class MissionManager {
 
     }
 
+    public void moveToNext() {
+        missionHandler.moveToNext();
+    }
+
     public interface MissionMonitor {
 
         void handle(Mission mission);
